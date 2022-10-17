@@ -1,4 +1,4 @@
-# Eureka Server ??
+# Eureka Server Port
 server:
   port: 8761
 
@@ -7,8 +7,21 @@ spring:
   application:
     name: discoverservice
 
-# Eureka Server ?? ??
+# Eureka Server 설정
 eureka:
+  server:
+    enable-self-preservation: true # 네트워크 장애 등 서비스 해제를 막기 위한 보호모드
+    expected-client-renewal-interval-seconds: 100 # Eureka Client 하트비트 간격(기본값 : 30)
+    eviction-interval-timer-in-ms: 600 # Eureka Client의 마지막 하트비트받은 후 기다리는 값(기본값 : 60)
+    renewal-percent-threshold: 0.85 # 임계치
   client:
-    register-with-eureka: false #Eureka Server? Client? ??? ??? ??? ???? ??? ??
-    fetch-registry: false # Eureka Server? ??? ??? ???? ??
+    register-with-eureka: false # Eureka Server이며, 자기 자신을 Eureka Client로 등록 안함
+    fetch-registry: false # Eureka Server이며, Eureka Server의 레지스트리 조회 안하도록 설정
+
+# End Point 설정
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
